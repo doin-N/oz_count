@@ -1,13 +1,21 @@
 import { useSelector,useDispatch } from 'react-redux';
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { fetchPosts } from './actions/post';
 
 
 
 function App() {
   
   const counter = useSelector((state) => state.counter ) //store.getState()
-  const dispatch = useDispatch() //store.dispatch(action)
+  const todos = useSelector((state) => state.todos);
+  const posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch()//store.dispatch(action)
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [])
+  
 
   const [todoValue, setTodoValue] = useState('');
   const handleSubmit = (e) => {
@@ -27,6 +35,13 @@ function App() {
 
   return (
     <div className="App">
+
+      <div>
+        <ul>
+          {posts.map((post, i) => <li key={i}>{post.title}</li>)}
+        </ul>
+      </div>
+
       <div>
         <ul>
         {todos.map((todo, index) => <li key={index}>{todo}</li>)}
@@ -37,7 +52,6 @@ function App() {
           onChange={(e) => setTodoValue(e.target.value)}/>
           <input type='submit'/>
         </form>
-
       </div>
 
       <div>

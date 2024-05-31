@@ -6,11 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import { applyMiddleware, createStore } from 'redux';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
+import {logerMiddlesware} from './middleware';
+import { thunk } from 'redux-thunk';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
-const middleware = applyMiddleware(logerMiddlesware);
+const middleware = applyMiddleware(thunk, logerMiddlesware);
 
 const store = createStore(rootReducer, middleware);
 
